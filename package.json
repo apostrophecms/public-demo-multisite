@@ -1,0 +1,47 @@
+{
+  "name": "public-demo-multisite",
+  "version": "1.2.0",
+  "description": "An ApostropheCMS multisite project, provided as a starting point for evaluation",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "build": "NODE_ENV=production bash -c 'node app @apostrophecms/asset:build --site=dashboard && ./scripts/for-each-theme @apostrophecms/asset:build'",
+    "//": "because nodemon insists on executing 'start' if it exists, we must distinguish production",
+    "production-start": "NODE_ENV=production npm run start",
+    "start": "node app",
+    "dev": "nodemon",
+    "eslint": "eslint --ext .js,.vue .",
+    "test": "npm run eslint && stylelint dashboard/**/*.{scss,vue} && stylelint sites/**/*.{scss,vue}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apostrophecms/public-demo-multisite.git"
+  },
+  "author": "Apostrophe Technologies, Inc.",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/apostrophecms/public-demo-multisite/issues"
+  },
+  "private": true,
+  "homepage": "https://github.com/apostrophecms/public-demo-multisite#readme",
+  "dependencies": {
+    "@apostrophecms-pro/multisite": "^4.3.0",
+    "@apostrophecms-pro/multisite-dashboard": "^1.4.0",
+    "@apostrophecms/blog": "^1.0.6",
+    "@apostrophecms/favicon": "^1.1.3",
+    "@apostrophecms/import-export": "^3.5.0",
+    "@apostrophecms/open-graph": "^1.2.3",
+    "@apostrophecms/seo": "^1.2.3",
+    "@apostrophecms/vite": "^1.1.0",
+    "apostrophe": "^4.26.0",
+    "klona": "^2.0.6"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.0.0",
+    "eslint-config-apostrophe": "^5.0.0",
+    "nodemon": "^3.0.1",
+    "stylelint": "^16.5.0",
+    "stylelint-config-apostrophe": "^4.2.0"
+  }
+}

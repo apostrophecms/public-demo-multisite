@@ -1,0 +1,11 @@
+**/node_modules
+public
+apos-build
+data
+dashboard/data
+sites/data
+dashboard/public
+sites/public
+dashboard/apos-build
+sites/apos-build
+
