@@ -43,5 +43,13 @@
     "nodemon": "^3.0.1",
     "stylelint": "^16.5.0",
     "stylelint-config-apostrophe": "^4.2.0"
+  },
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "better-sqlite3": true,
+    "esbuild": true,
+    "fsevents": true,
+    "sharp": true,
+    "vue-demi": true
   }
 }
