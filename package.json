@@ -9,6 +9,7 @@
     "//": "because nodemon insists on executing 'start' if it exists, we must distinguish production",
     "production-start": "NODE_ENV=production npm run start",
     "start": "node app",
+    "migrate": "./deployment/migrate",
     "dev": "nodemon",
     "eslint": "eslint --ext .js,.vue .",
     "test": "npm run eslint && stylelint dashboard/**/*.{scss,vue} && stylelint sites/**/*.{scss,vue}"
