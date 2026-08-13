@@ -1,4 +1,4 @@
-export default async function (site) {
+export default async function (site, { logger } = {}) {
   const config = {
     root: import.meta,
     // Theme name is globally available as apos.options.theme
@@ -97,7 +97,7 @@ export default async function (site) {
 
     }
   };
-  console.log(`Configuring site with theme: ${site.theme}`);
+  logger?.info('site-theme-configured', { theme: site.theme })
   // Allow each theme to modify the configuration object,
   // enabling additional modules etc.
   const { default: theme } = await import(`./lib/theme-${site.theme}.js`);
