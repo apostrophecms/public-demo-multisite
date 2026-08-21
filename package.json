@@ -34,7 +34,8 @@
     "@apostrophecms/open-graph": "^1.2.3",
     "@apostrophecms/seo": "^1.2.3",
     "@apostrophecms/vite": "^1.1.0",
-    "apostrophe": "^4.26.0",
+    "apostrophe": "^4.32.1",
+    "dayjs": "^1.11.20",
     "klona": "^2.0.6"
   },
   "devDependencies": {

@@ -7,10 +7,12 @@
     "./dashboard/modules/**/*",
     "./dashboard/lib/**/*.js",
     "./dashboard/views/**/*.html",
+    "./dashboard/views/**/*.jsx",
     "./sites/index.js",
     "./sites/modules/**/*",
     "./sites/lib/**/*.js",
-    "./sites/views/**/*.html"
+    "./sites/views/**/*.html",
+    "./sites/views/**/*.jsx"
   ],
   "ignoreRoot": [".git"],
   "ignore": [
@@ -24,5 +26,5 @@
     "locales/*.json",
     "data"
   ],
-  "ext": "json, js, cjs, html"
+  "ext": "json, js, cjs, jsx, html"
 }
