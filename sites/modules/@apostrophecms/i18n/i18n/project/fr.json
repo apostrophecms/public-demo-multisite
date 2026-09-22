@@ -232,5 +232,13 @@
   "textAndType": "Texte et typographie",
   "textColor": "Couleur du texte",
   "textColorHelp": "Utilisée pour le texte et les libellés",
-  "widgets": "Widgets"
+  "widgets": "Widgets",
+  "allArticles": "Tous les articles",
+  "menu": "Menu",
+  "closeMenu": "Fermer",
+  "toggleDarkMode": "Basculer le mode sombre",
+  "footerExplore": "Découvrir ApostropheCMS",
+  "footerProduct": "Produit",
+  "footerSocialMedia": "Réseaux sociaux",
+  "ghPrsForRepo": "PRs {{state}} pour {{repo}}"
 }

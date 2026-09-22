@@ -137,7 +137,7 @@ function ExtraHead({ apos }) {
   );
 }
 
-function Header({ data, apos }) {
+function Header({ data, apos, __t }) {
   const {
     logoAttachment, logoAttachmentDark, logoUrl, logoUrlDark
   } = logoUrls(data, apos);
@@ -189,14 +189,14 @@ function Header({ data, apos }) {
             <path d="M4 12h16" />
             <path d="M4 19h16" />
           </svg>
-          <span>Menu</span>
+          <span>{__t('project:menu')}</span>
         </button>
       </div>
     </header>
   );
 }
 
-function MobileNav({ data, apos }) {
+function MobileNav({ data, apos, __t }) {
   return (
     <div className="mobile-nav" data-mobile-nav="hidden" aria-hidden="true">
       <button className="mobile-nav__close-trigger" data-mobile-close-trigger>
@@ -215,7 +215,7 @@ function MobileNav({ data, apos }) {
           <path d="M18 6 6 18" />
           <path d="m6 6 12 12" />
         </svg>
-        <span>Close</span>
+        <span>{__t('project:closeMenu')}</span>
       </button>
       <nav id="mobile-nav" className="mobile-nav__nav" role="navigation">
         <NavLinks data={data} />
@@ -227,7 +227,7 @@ function MobileNav({ data, apos }) {
   );
 }
 
-function Footer({ data }) {
+function Footer({ data, __t }) {
   return (
     <footer className="footer">
       <div className="footer__section footer__top">
@@ -237,7 +237,7 @@ function Footer({ data }) {
           }} />
         </div>
         <div className="footer__column">
-          <h4>Explore ApostropheCMS</h4>
+          <h4>{__t('project:footerExplore')}</h4>
           <ul>
             <li><a href="http://apostrophecms.com/?utm_source=demo" target="_blank" rel="noopener noreferrer">ApostropheCMS.com</a></li>
             <li><a href="https://docs.apostrophecms.org/?utm_source=demo" target="_blank" rel="noopener noreferrer">ApostropheCMS Docs</a></li>
@@ -247,7 +247,7 @@ function Footer({ data }) {
           </ul>
         </div>
         <div className="footer__column">
-          <h4>Product</h4>
+          <h4>{__t('project:footerProduct')}</h4>
           <ul>
             <li><a href="https://apostrophecms.com/extensions?license=pro&utm_source=demo" target="_blank" rel="noopener noreferrer">Pro Feature</a></li>
             <li><a href="https://apostrophecms.com/hosting?utm_source=demo" target="_blank" rel="noopener noreferrer">Hosting</a></li>
@@ -257,7 +257,7 @@ function Footer({ data }) {
           </ul>
         </div>
         <div className="footer__column">
-          <h4>Social Media</h4>
+          <h4>{__t('project:footerSocialMedia')}</h4>
           <ul>
             <li><a href="https://bsky.app/profile/apostrophecms.com" target="_blank" rel="noopener noreferrer">Bluesky</a></li>
             <li><a href="https://x.com/apostrophecms" target="_blank" rel="noopener noreferrer">X / Twitter</a></li>
@@ -271,18 +271,18 @@ function Footer({ data }) {
   );
 }
 
-function ModeSwitch() {
+function ModeSwitch({ __t }) {
   return (
     <div className="mode-switch" data-mode-switch>
       <label htmlFor="light-dark-toggle">
-        <span className="sr-only">Toggle dark mode</span>
+        <span className="sr-only">{__t('project:toggleDarkMode')}</span>
         <input
           className="toggle-checkbox"
           type="checkbox"
           name="light-dark-toggle"
           id="light-dark-toggle"
           role="switch"
-          aria-label="Toggle dark mode"
+          aria-label={__t('project:toggleDarkMode')}
         />
         <div className="toggle-slot">
           <div className="sun-icon-wrapper" dangerouslySetInnerHTML={{
@@ -298,7 +298,7 @@ function ModeSwitch() {
   );
 }
 
-export default function (data, { Extend, apos }) {
+export default function (data, { Extend, apos, __t }) {
   // `data.title` is how a page template overrides the document title — the
   // JSX equivalent of Nunjucks `{% block title %}`.
   const title = data.title || defaultTitle(data);
@@ -315,8 +315,8 @@ export default function (data, { Extend, apos }) {
       extraHead={<ExtraHead apos={apos} />}
       main={
         <>
-          <Header data={data} apos={apos} />
-          <MobileNav data={data} apos={apos} />
+          <Header data={data} apos={apos} __t={__t} />
+          <MobileNav data={data} apos={apos} __t={__t} />
           {data.breadcrumbs !== undefined ? data.breadcrumbs : <Breadcrumbs data={data} />}
           {data.pageTitle !== undefined ? data.pageTitle : <PageTitle data={data} />}
           <div className="layout">
@@ -324,10 +324,10 @@ export default function (data, { Extend, apos }) {
               {data.main}
             </main>
           </div>
-          <Footer data={data} />
+          <Footer data={data} __t={__t} />
         </>
       }
-      extraBody={<ModeSwitch />}
+      extraBody={<ModeSwitch __t={__t} />}
     />
   );
 }

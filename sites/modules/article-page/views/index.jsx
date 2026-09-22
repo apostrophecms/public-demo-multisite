@@ -96,7 +96,7 @@ export default function (data, {
                   href="?"
                   className={!data.query.categories ? 'active' : undefined}
                 >
-                  All Articles
+                  {__t('project:allArticles')}
                 </a>
               </li>
               {(data._categories || []).map((category) => (
