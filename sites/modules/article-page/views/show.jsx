@@ -1,7 +1,9 @@
 // A single article. Metadata goes in the page-title slot; the image and main
 // area go in the main slot.
 
-export default function (data, { Extend, Area, apos }) {
+export default function (data, {
+  Extend, Area, apos, __t
+}) {
   const article = data.piece;
   const attachment = apos.image.first(article._image);
   const url = attachment ? apos.attachment.url(attachment, { size: 'full' }) : null;
@@ -18,7 +20,7 @@ export default function (data, { Extend, Area, apos }) {
           <div className="article-details">
             {article._author && article._author.length > 0 && (
               <div className="article-detail article-author">
-                Written by{' '}
+                {__t('project:writtenBy')}{' '}
                 <a href={`${article._parentSlug}?author=${article._author[0].slug}`}>
                   {article._author[0].title}
                 </a>

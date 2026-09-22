@@ -232,5 +232,13 @@
   "textAndType": "Text and Typography",
   "textColor": "Text Color",
   "textColorHelp": "Used for text and labels",
-  "widgets": "Widgets"
+  "widgets": "Widgets",
+  "allArticles": "All Articles",
+  "menu": "Menu",
+  "closeMenu": "Close",
+  "toggleDarkMode": "Toggle dark mode",
+  "footerExplore": "Explore ApostropheCMS",
+  "footerProduct": "Product",
+  "footerSocialMedia": "Social Media",
+  "ghPrsForRepo": "{{state}} PRs for {{repo}}"
 }
