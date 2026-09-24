@@ -90,8 +90,8 @@ Notes that catch people out:
   plain functions — pass `apos`, `Area`, `__t` explicitly, under their own names (`__t={__t}`,
   never `t={__t}`).
 - **`key` and `ref` are accepted but ignored.** There is no client reconciler. Don't write them,
-  including inside `.map()`. This is not a reason to strip `_id` — `button-widget` renders
-  `id={widget._id}` and targets it from an injected style rule.
+  including inside `.map()`. This is not a reason to strip `_id` — `layout-widget` passes
+  `widgetId: widget._id` through `aposParentOptions`.
 - Unlike React, `style` accepts a plain string, and attributes pass through verbatim, so `srcset`
   and `crossorigin` keep their lowercase HTML spelling.
 - Templates are real JS modules — `import` freely and define components in the same file.
