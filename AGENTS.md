@@ -141,6 +141,35 @@ Fix template-level bugs in both, or port promptly. A diff of the two template tr
 nothing; if it does, either a fix is unported or a multisite-specific change was made and needs a
 comment explaining why.
 
+## Filter and Pagination URLs
+
+`sites/modules/@apostrophecms/url` sets `static: true`, so piece-page filters and pages are
+**paths**, not query strings: `/articles/categories/news/page/2`, not
+`/articles?categories=news&page=2`. Query strings still work on the way in; nothing should
+generate them.
+
+- Filters are declared in `piecesFilters` on `sites/modules/article-page/index.js` (`categories`,
+  `authors`). Each gets its own dispatch routes and a `data.filters` entry in the index template.
+- In the index template, link to a filter through its choice's `_url`; don't build the URL yourself.
+- Elsewhere, append `apos.url.getChoiceFilter(name, value, page)` or
+  `apos.url.getPageFilter(page)` to a page's `_url`, or a piece's `_parentUrl`.
+- Use `_parentUrl`, never `_parentSlug`. The slug lacks the `/fr` or `/de` locale prefix.
+- A static URL expresses one filter at a time.
+
+## Article Authors
+
+Articles credit **`author` pieces** through `_authors` (coauthors allowed), never users.
+An author is a byline and may have no user account at all.
+
+- `author` is `localized: false`: one author per person, shared by every locale.
+- A user links to at most one author through their own `_author` field, which admins can set.
+- `apos.author.ensureForUser(user)` returns that author, creating and linking a new one if the
+  user has none or theirs was archived or deleted.
+  It runs when a user starts a new article (the default `_authors`) and whenever they save one.
+- A user's display name change is copied to their author unless `syncUserName: false`. Nothing
+  else syncs, and archiving a user leaves their author untouched.
+- Do not add relationships to `@apostrophecms/user` for anything visitors see.
+
 ## Server-side helpers (`sites/modules/helper/`)
 
 Registers **`methods`**, not Nunjucks helpers:
