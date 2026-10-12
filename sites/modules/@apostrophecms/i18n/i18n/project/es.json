@@ -237,6 +237,13 @@
   "textColorHelp": "Se usa para texto y etiquetas",
   "widgets": "Widgets",
   "allArticles": "Todos los artículos",
+  "menu": "Menú",
+  "closeMenu": "Cerrar",
+  "toggleDarkMode": "Alternar modo oscuro",
+  "footerExplore": "Explorar ApostropheCMS",
+  "footerProduct": "Producto",
+  "footerSocialMedia": "Redes sociales",
+  "ghPrsForRepo": "PRs {{state}} de {{repo}}"
   "userAuthor": "Autor",
   "userAuthorHelp": "La firma que se acredita cuando este usuario escribe un artículo. Se crea automáticamente la primera vez que trabaja en uno."
 }
