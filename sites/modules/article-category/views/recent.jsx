@@ -21,7 +21,7 @@ export default function (data, { Area, apos, __t }) {
           <article>
             {!apos.area.isEmpty(article, 'blurb')
               ? (
-                <p className="article-blurb"><Area doc={article} name="blurb" /></p>
+                <div className="article-blurb"><Area doc={article} name="blurb" /></div>
               )
               : (
                 <p className="placeholder">{__t('project:noSummary')}</p>
