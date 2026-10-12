@@ -4,8 +4,11 @@
   "align": "Alinear",
   "apostropheCmsSite": "Sitio ApostropheCMS",
   "article": "Artículo",
-  "articleAuthor": "Autor",
-  "articleAuthorColumn": "Autor",
+  "author": "Autor",
+  "authors": "Autores",
+  "articleAuthors": "Autores",
+  "articleAuthorsColumn": "Autores",
+  "authorName": "Nombre",
   "articleBlurb": "Resumen",
   "articleBlurbHelp": "Un resumen breve",
   "articleCategories": "Categorías de artículos",
@@ -241,4 +244,6 @@
   "footerProduct": "Producto",
   "footerSocialMedia": "Redes sociales",
   "ghPrsForRepo": "PRs {{state}} de {{repo}}"
+  "userAuthor": "Autor",
+  "userAuthorHelp": "La firma que se acredita cuando este usuario escribe un artículo. Se crea automáticamente la primera vez que trabaja en uno."
 }

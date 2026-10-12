@@ -4,8 +4,11 @@
   "align": "Aligner",
   "apostropheCmsSite": "Site ApostropheCMS",
   "article": "Article",
-  "articleAuthor": "Auteur",
-  "articleAuthorColumn": "Auteur",
+  "author": "Auteur",
+  "authors": "Auteurs",
+  "articleAuthors": "Auteurs",
+  "articleAuthorsColumn": "Auteurs",
+  "authorName": "Nom",
   "articleBlurb": "Résumé",
   "articleBlurbHelp": "Un court résumé",
   "articleCategories": "Catégories d’articles",
@@ -241,4 +244,6 @@
   "footerProduct": "Produit",
   "footerSocialMedia": "Réseaux sociaux",
   "ghPrsForRepo": "PRs {{state}} pour {{repo}}"
+  "userAuthor": "Auteur",
+  "userAuthorHelp": "La signature créditée lorsque cet utilisateur écrit un article. Créée automatiquement la première fois qu’il travaille sur un article."
 }
