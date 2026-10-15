@@ -105,7 +105,9 @@ you test, for example:
 Install dependencies:
 
 ```
-npm install
+# Be sure to use "npm update" the first time, and periodically, to ensure you don't
+# get an old release
+npm update
 ```
 
 Add an admin user to the **dashboard** site (it manages all the others). You'll be
