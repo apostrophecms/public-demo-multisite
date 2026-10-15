@@ -156,6 +156,20 @@ generate them.
 - Use `_parentUrl`, never `_parentSlug`. The slug lacks the `/fr` or `/de` locale prefix.
 - A static URL expresses one filter at a time.
 
+## Frontend URL remapping (`sites/modules/url-remap/`)
+
+An example, off unless a site's dashboard **Frontend Base URL** (`frontendBaseUrl`) is set.
+When set, `_url` on pages and pieces uses that origin for anonymous visitors and API key or
+bearer token requests; logged-in editing sessions keep the CMS domain.
+
+- The hook is the `pageUrl` query builder, extended in
+  `sites/modules/@apostrophecms/doc-type/index.js`. Pieces, rich text permalinks and
+  relationships all derive from page `_url`s, so don't add per-consumer rewriting.
+- The policy lives in `apos.urlRemap.shouldRemap(req)`; path translation in `remapUrl()`.
+- Core's `extendQueries` stops after the first nested builder it extends. Keep `pageUrl` the
+  last builder extended in that file.
+- Details and limits: `sites/modules/url-remap/README.md`.
+
 ## Article Authors
 
 Articles credit **`author` pieces** through `_authors` (coauthors allowed), never users.
