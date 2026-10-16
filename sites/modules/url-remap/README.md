@@ -36,7 +36,9 @@ Change the policy in that one method.
 
 In this project the origin is a per-site **Frontend Base URL** field in the multisite
 dashboard (`dashboard/modules/site/index.js`), passed in by `sites/index.js`. Empty means
-off. Outside multisite, set the module option directly:
+off. Changing it doesn't need a restart: saving the site in the dashboard updates the site
+record, and multisite rebuilds that site's instance on its next request. Outside multisite,
+set the module option directly:
 
 ```js
 'url-remap': {
@@ -49,6 +51,27 @@ To reuse this elsewhere, copy `sites/modules/url-remap/` and
 configuration.
 
 ## What a headless frontend receives
+
+The frontend has to authenticate. Apostrophe's REST API doesn't serve content to
+anonymous callers unless a type sets `publicApiProjection`, and this project configures no
+API keys. Add one in the `@apostrophecms/express` module options:
+
+```js
+'@apostrophecms/express': {
+  options: {
+    // Keep the real key out of source control. Guard against an unset variable, which
+    // would otherwise register the literal key "undefined".
+    apiKeys: process.env.FRONTEND_API_KEY
+      ? { [process.env.FRONTEND_API_KEY]: { role: 'guest' } }
+      : {}
+  }
+}
+```
+
+The frontend then sends `Authorization: ApiKey <key>` (or `?apiKey=<key>`). A `guest` key
+sees published content as a logged-in guest would. Bearer tokens from
+`POST /api/v1/@apostrophecms/login/login` also work. Both count as API requests, so they
+get remapped URLs.
 
 - `_url` and `_parentUrl` on pages and pieces are frontend URLs.
 - Rich text `content` from the REST API still contains the permalink placeholders, exactly as
