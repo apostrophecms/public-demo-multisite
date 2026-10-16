@@ -34,6 +34,14 @@ export default async function (site, { logger } = {}) {
       // Template helpers
       helper: {},
 
+      // Repoints page and piece `_url`s at a separate frontend, if the site
+      // has one configured in the dashboard
+      'url-remap': {
+        options: {
+          frontendBaseUrl: site.frontendBaseUrl
+        }
+      },
+
       // Widgets
       '@apostrophecms/rich-text-widget': {},
       '@apostrophecms/image-widget': {},
