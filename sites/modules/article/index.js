@@ -92,7 +92,10 @@ export default {
     return {
       async recent(req, data) {
         return {
-          articles: await self.find(req).limit(data.limit).sort({ createdAt: -1 }).toArray(),
+          articles: await self.find(req)
+            .limit(data.limit)
+            .sort({ createdAt: -1 })
+            .toArray(),
           display: data.display,
           // Component templates don't receive the page's `data.locale`.
           locale: req.locale
@@ -153,7 +156,9 @@ export default {
             }
           }
           await self.apos.doc.db.updateOne({ _id: doc._id }, {
-            $set: { authorsIds: [ ...new Set([ ...(doc.authorsIds || []), ...authorsIds ]) ] },
+            $set: {
+              authorsIds: [ ...new Set([ ...(doc.authorsIds || []), ...authorsIds ]) ]
+            },
             $unset: { authorIds: 1 }
           });
         });

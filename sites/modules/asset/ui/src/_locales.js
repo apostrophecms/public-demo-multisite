@@ -29,5 +29,5 @@ export default () => {
         window.removeEventListener('click', clickOutside);
       }
     }
-  }
+  };
 };
