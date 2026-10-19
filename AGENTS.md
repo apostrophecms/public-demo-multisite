@@ -34,7 +34,8 @@ npm test                  # eslint + stylelint over dashboard/ and sites/
 
 `nodemon` does **not** watch `.scss` — Sass edits will not restart the process.
 
-`npm run eslint` is `eslint --ext .js,.vue`, so **`.jsx` templates are not linted**. In a project
+`npm run eslint` uses the flat config in `eslint.config.js` (ESLint 9; 10 breaks
+`eslint-config-apostrophe`), which ignores `**/*.jsx`, so **`.jsx` templates are not linted**. In a project
 whose templates are all JSX, that covers module code and leaves the templates unchecked.
 
 ### Verify visual changes in production, not dev

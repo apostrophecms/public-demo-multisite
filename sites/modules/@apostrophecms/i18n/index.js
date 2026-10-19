@@ -41,8 +41,9 @@ export default {
           await _super(req);
           req.data.localizations?.forEach(locale => {
             locale.flag =
-              locale.locale === 'en' ? 'US'
-              : self.locales[locale.locale].flag || locale.locale.toUpperCase();
+              locale.locale === 'en'
+                ? 'US'
+                : self.locales[locale.locale].flag || locale.locale.toUpperCase();
           });
         }
       }

@@ -11,7 +11,7 @@
     "start": "node app",
     "migrate": "./deployment/migrate",
     "dev": "nodemon",
-    "eslint": "eslint --ext .js,.vue .",
+    "eslint": "eslint .",
     "test": "npm run eslint && stylelint dashboard/**/*.{scss,vue} && stylelint sites/**/*.{scss,vue}"
   },
   "repository": {
@@ -24,27 +24,30 @@
     "url": "https://github.com/apostrophecms/public-demo-multisite/issues"
   },
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "homepage": "https://github.com/apostrophecms/public-demo-multisite#readme",
   "dependencies": {
-    "@apostrophecms-pro/multisite": "^4.3.0",
-    "@apostrophecms-pro/multisite-dashboard": "^1.4.0",
+    "@apostrophecms-pro/multisite": "^4.7.0",
+    "@apostrophecms-pro/multisite-dashboard": "^1.8.1",
     "@apostrophecms/blog": "^1.0.6",
-    "@apostrophecms/favicon": "^1.1.3",
-    "@apostrophecms/import-export": "^3.5.0",
+    "@apostrophecms/favicon": "^1.1.4",
+    "@apostrophecms/import-export": "^3.7.1",
     "@apostrophecms/open-graph": "^1.2.3",
-    "@apostrophecms/seo": "^1.2.3",
-    "@apostrophecms/vite": "^1.1.0",
-    "apostrophe": "^4.32.1",
-    "dayjs": "^1.11.20",
+    "@apostrophecms/seo": "^1.7.1",
+    "@apostrophecms/vite": "^1.2.0",
+    "apostrophe": "^4.34.0",
+    "dayjs": "^1.11.23",
     "klona": "^2.0.6"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
-    "eslint": "^8.0.0",
-    "eslint-config-apostrophe": "^5.0.0",
+    "eslint": "^9.39.5",
+    "eslint-config-apostrophe": "^6.1.0",
     "nodemon": "^3.0.1",
     "stylelint": "^16.5.0",
-    "stylelint-config-apostrophe": "^4.2.0"
+    "stylelint-config-apostrophe": "^4.4.0"
   },
   "allowScripts": {
     "@parcel/watcher": true,

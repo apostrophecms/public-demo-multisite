@@ -100,7 +100,7 @@ export default async function (site, { logger } = {}) {
 
     }
   };
-  logger?.info('site-theme-configured', { theme: site.theme })
+  logger?.info('site-theme-configured', { theme: site.theme });
   // Allow each theme to modify the configuration object,
   // enabling additional modules etc.
   const { default: theme } = await import(`./lib/theme-${site.theme}.js`);
