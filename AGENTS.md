@@ -176,7 +176,7 @@ An author is a byline and may have no user account at all.
 Registers **`methods`**, not Nunjucks helpers:
 
 - `apos.helper.linkPath(link)` — resolves a link field group into a URL string
-- `apos.helper.formatDate(date)` — `"Month D, YYYY"`
+- `apos.helper.formatDate(date, locale)` — long date for the locale (default `en`), e.g. `"October 28, 2026"`
 
 JSX receives the real `apos`, so methods are callable directly. **These are not reachable from
 Nunjucks templates**, which resolve `apos.helper.*` against registered helpers. That is acceptable

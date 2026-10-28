@@ -27,7 +27,7 @@ export default function (data, { __t }) {
       {data.response.map((item) => (
         <li className="gh-pr-widget__item">
           <h2 className="gh-pr-widget__subtitle">
-            <a href={item.url}>{item.title}</a>
+            <a href={item.html_url}>{item.title}</a>
           </h2>
           <a
             target="_blank"

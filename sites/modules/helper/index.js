@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 
 // Registered as `methods`, not Nunjucks helpers. JSX templates receive the real
 // `apos` object, so module methods are callable directly as
@@ -30,8 +29,10 @@ export default {
         }
         return path;
       },
-      formatDate(date) {
-        return dayjs(date).format('MMMM D, YYYY');
+      // Intl rather than a fixed English format, so /fr and /de get localized
+      // month names. `dateStyle: 'long'` matches the old "October 28, 2026" in en.
+      formatDate(date, locale = 'en') {
+        return new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(date));
       }
     };
   }
