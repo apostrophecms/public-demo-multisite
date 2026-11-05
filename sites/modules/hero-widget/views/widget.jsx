@@ -1,12 +1,15 @@
-// An editable area, optionally followed by a row of call-to-action buttons.
+// Rich text editable in place, optionally followed by a row of
+// call-to-action buttons.
 
-export default function (data, { Area, Template, apos }) {
+export default function (data, { Field, Template, apos }) {
   const widget = data.widget;
   const links = widget.links || [];
   return (
     <div className="widget hero-widget">
       <div className="hero-widget__content">
-        <Area doc={widget} name="content" />
+        {/* The `content` richText field, editable in place. `demo-rte` keeps
+            the shared rich text styles the old rich text widget carried. */}
+        <Field doc={widget} name="content" with={{ class: 'demo-rte hero-widget__text' }} />
       </div>
       {links.length > 0 && (
         <div className="hero-widget__buttons">
