@@ -76,6 +76,7 @@ second is the helper set:
 | `apos` | The real `self.apos`. Call module methods directly. Prefer this. |
 | `helpers` | Nunjucks-oriented helper wrappers. Only when you need a specific helper's exact behavior. |
 | `Area` | Renders an area — replaces `{% area %}` |
+| `Field` | Renders a `string` or `richText` field, editable in place — replaces `{% field %}`. Options go in `with`: `<Field doc={widget} name="content" with={{ class: 'x' }} />` |
 | `Component` | Invokes an async component — replaces `{% component %}` |
 | `Template` | Renders another template, include semantics — replaces `{% include %}` |
 | `Extend` | Renders another template, extends semantics; props become `{% block %}` overrides against a `.html` target |
