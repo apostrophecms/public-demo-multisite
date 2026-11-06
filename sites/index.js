@@ -76,6 +76,33 @@ export default async function (site, { logger } = {}) {
       // Bylines for articles, optionally linked to a user
       author: {},
 
+      // Beekeeping association modules. Every site on this platform is one
+      // association, so these are enabled for all of them rather than per theme.
+
+      // Meetings, workshops, apiary visits and shows, with a calendar page
+      event: {},
+      'event-page': {},
+      'upcoming-events-widget': {},
+
+      // The membership directory: profiles, mentors, swarm collectors and
+      // members selling honey
+      member: {},
+      'member-page': {},
+      'members-widget': {},
+
+      // A library of guides and downloads for members and the public
+      resource: {},
+      'resource-page': {},
+
+      'association-stats-widget': {},
+      'swarm-hotline-widget': {},
+      'seasonal-calendar-widget': {},
+      'banner-widget': {},
+
+      // `node app sample-content:populate --site=...` fills a new site with a
+      // complete demo association
+      'sample-content': {},
+
       // Import and export content
       '@apostrophecms/import-export': {},
 

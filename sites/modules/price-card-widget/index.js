@@ -119,7 +119,9 @@ export default {
         label: 'project:textColor',
         selector: '.price-card-widget',
         property: 'color',
-        def: '--surface-color',
+        // Not --surface-color: that is also the background default, which made
+        // the text of a new card invisible.
+        def: '--default-color',
         options: {
           presetColors: [
             '--accent-color',

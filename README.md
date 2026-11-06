@@ -23,6 +23,52 @@ locally to evaluate Apostrophe Assembly. It is a single codebase that serves:
 It also serves as example code for organizing a multisite project and writing your
 own custom modules and widgets.
 
+## The beekeeping association demo
+
+This branch turns the demo into a platform for beekeeping associations: each site
+is one association, with many members. On top of the general-purpose pages and
+widgets, every site gets:
+
+* **Page types:** an events calendar (upcoming, past, and by type), a member
+  directory (filter by mentors, swarm collectors, honey sellers or new beekeepers)
+  and a resource library (by topic and level).
+* **Piece types:** events, members and resources, alongside the existing articles.
+* **Widgets**, grouped under "Association" in the widget menu: image banner,
+  upcoming events, members (the committee, mentors, swarm collectors…), live
+  association stats, a swarm hotline and a month-by-month "In the Apiary" calendar.
+* **Association settings** in Global Content (contact details, swarm hotline,
+  address, social links), shown in the footer.
+
+### Populating a site with sample content
+
+After creating a site in the dashboard (see below), fill it with a complete sample
+association, including photos. Two associations are available, deliberately
+different so the demo shows one platform serving distinct organizations:
+
+* `linden` (the default): **Linden Valley Beekeepers' Association**, a rural
+  association founded in 1952, in the platform's default honey colors.
+* `port-sorrel`: **Port Sorrel Urban Bee Collective**, a young city collective
+  with rooftop hives, "hive host" buildings and a swarm squad. It brings its own
+  teal-and-yellow look, set through Global Styles as an editor would.
+
+```
+node app sample-content:populate --site=linden.localhost
+node app sample-content:populate --site=sorrel.localhost --profile=port-sorrel
+# either one under your own association name
+node app sample-content:populate --site=ridge.localhost --name="Ridge Beekeepers"
+```
+
+The task is meant for a new, empty site and refuses to run if the site already has
+events or members. Event dates are relative to the day you run it. The photos are
+freely licensed from Wikimedia Commons; each keeps its credit, and the task adds a
+"Photo credits" page under "About".
+
+> Run only one dev server at a time. In dev mode, starting `npm run dev` or
+> `node app` deletes the build-watcher sites of any other running instance, even
+> if the new one then fails because port 3000 is taken. The surviving server
+> keeps serving pages but loses its dev assets (unstyled pages, 403s from
+> `/__vite`) until it is restarted.
+
 ## How a multisite project is organized
 
 In a normal single-site Apostrophe project, you configure modules in `app.js`. In a
@@ -45,7 +91,7 @@ new to Apostrophe, start with the
 
 ### Set your shortname prefix
 
-In `app.js`, `shortNamePrefix` is currently `public-demo-`. Change it to a unique
+In `app.js`, `shortNamePrefix` is currently `beekeeping-`. Change it to a unique
 string for your project (conventionally your repo name followed by `-`). This
 prefixes the MongoDB database names so they don't collide with other Assembly
 projects in development.

@@ -13,6 +13,18 @@ export default {
         label: 'project:articleIndexPage'
       },
       {
+        name: 'event-page',
+        label: 'project:eventPage'
+      },
+      {
+        name: 'member-page',
+        label: 'project:memberPage'
+      },
+      {
+        name: 'resource-page',
+        label: 'project:resourcePage'
+      },
+      {
         name: '@apostrophecms/home-page',
         label: 'project:home'
       }

@@ -61,8 +61,9 @@ export default () => {
     }
     done = true;
 
-    const currentPref = getCurrentPreference();
-    updateNavLogo(currentPref === 'dark');
+    // Not getCurrentPreference(): the toggle is only synced below, so here it
+    // always read "light" and the light logo was shown in dark mode.
+    updateNavLogo(document.body.classList.contains('dark'));
 
     const toggle = document.querySelector('[data-mode-switch] input');
 

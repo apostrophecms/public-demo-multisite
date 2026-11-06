@@ -14,6 +14,9 @@ export default {
     ],
     order: [
       '@apostrophecms/image',
+      'event',
+      'member',
+      'resource',
       'article',
       'article-category'
     ]

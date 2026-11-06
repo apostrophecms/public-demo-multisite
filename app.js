@@ -10,7 +10,9 @@ const dashboardShortName = process.env.APOS_DASHBOARD_SHORTNAME || 'dashboard';
 try {
   await multisite({
     root: import.meta,
-    shortNamePrefix: 'public-demo-',
+    // Distinct from the upstream public-demo-multisite prefix, so both projects
+    // can run against one local MongoDB without sharing a dashboard
+    shortNamePrefix: 'beekeeping-',
     // Default port, for dev
     port: 3000,
     mongodbUrl: 'mongodb://localhost:27017',

@@ -1,6 +1,9 @@
-# AGENTS.md — public-demo-multisite
+# AGENTS.md — beekeeping-demo-multisite
 
 Machine-readable project brief for AI coding assistants. Facts and conventions only.
+
+A branch of `public-demo-multisite` demonstrating a multisite platform for beekeeping associations:
+one association per site, many members per site. See [Beekeeping platform](#beekeeping-platform).
 
 ---
 
@@ -18,7 +21,8 @@ An ApostropheCMS multisite project built on `@apostrophecms-pro/multisite`, usin
 | `themes.js` | Theme list; must stay in step with the `list-themes` task Apostrophe Cloud uses |
 | `scripts/`, `deployment/` | Build and deploy helpers, including `for-each-theme` |
 
-Sites are prefixed `public-demo-` (`shortNamePrefix` in `app.js`); the dashboard's short name comes
+Sites are prefixed `beekeeping-` (`shortNamePrefix` in `app.js`, distinct from upstream so both
+projects can share one local MongoDB without sharing a dashboard); the dashboard's short name comes
 from `APOS_DASHBOARD_SHORTNAME`, defaulting to `dashboard`.
 
 ## Dev Commands
@@ -31,6 +35,19 @@ npm run production-start  # NODE_ENV=production npm start
 npm run migrate           # ./deployment/migrate
 npm test                  # eslint + stylelint over dashboard/ and sites/
 ```
+
+Run one dev server at a time. At startup in dev, `@apostrophecms-pro/multisite` calls
+`removeDevWatcherSites()` with no ids, deleting *every* build-watcher site in the shared dashboard
+database, before it binds the port. A second start that dies with `EADDRINUSE` therefore still
+removes the first server's watcher site; the first server's janitor destroys that instance within
+15 seconds and respins it without Vite, so every page's `/__vite` assets return `403 forbidden`
+until a restart. A forgotten `nodemon` whose child was killed does this on every watched file save.
+Command-line tasks (`node app <task> --site=...`) do not.
+
+`npm test` currently stops at stylelint before reaching `sites/`, because the
+`dashboard/**/*.{scss,vue}` glob matches no files. Stylelint over `sites/` also reports many existing
+violations, chiefly the `max-width` media queries every stylesheet uses. `npx eslint .` is the check
+that passes cleanly.
 
 `nodemon` does **not** watch `.scss` — Sass edits will not restart the process.
 
@@ -142,6 +159,11 @@ Fix template-level bugs in both, or port promptly. A diff of the two template tr
 nothing; if it does, either a fix is unported or a multisite-specific change was made and needs a
 comment explaining why.
 
+In this beekeeping branch two shared templates diverge on purpose, each with a comment saying so:
+`views/layout.jsx` (an association footer driven by global settings) and
+`modules/@apostrophecms/home-page/views/page.jsx` (a hidden `<h1>`, since a banner widget opens the
+page). Templates in modules that exist only here have no upstream counterpart.
+
 ## Filter and Pagination URLs
 
 `sites/modules/@apostrophecms/url` sets `static: true`, so piece-page filters and pages are
@@ -215,3 +237,58 @@ Files that Vite does *not* process — anything dropped in `modules/*/public/`, 
 `apostrophe` must be >= 4.31 for JSX support. Neither `@apostrophecms-pro/multisite` nor
 `multisite-dashboard` declares a peer range on `apostrophe`, so compatibility is untested upstream
 rather than guaranteed — verify the dashboard loads after any `apostrophe` bump.
+
+## Beekeeping platform
+
+Every site is one association. These modules are enabled for all sites in `sites/index.js`, not per
+theme.
+
+| Module | Kind | Notes |
+|--------|------|-------|
+| `event`, `event-page` | piece, page | Calendar. `startDate` is a `YYYY-MM-DD` string; the `when` builder (`upcoming`/`past`) compares it to today as text. The index defaults to upcoming and sorts `/when/past` newest first (`indexQuery`). |
+| `member`, `member-page` | piece, page | Directory profiles, not logins. `localized: false`, like `author`. Roles (`sites/lib/memberRoles.js`) are the directory filter: `/members/roles/mentor`. |
+| `resource`, `resource-page` | piece, page | Guides with an optional file download and outside link. Filters `topic` and `level`. |
+| `upcoming-events-widget`, `members-widget` | widget | Delegate to the `upcoming` component of `event` and the `list` component of `member`, like `article-widget`. |
+| `association-stats-widget` | widget | Live counts computed in `load`, once per request for every stats widget on the page. |
+| `swarm-hotline-widget` | widget | Falls back to `global.swarmHotline`. |
+| `seasonal-calendar-widget` | widget | Month-by-month tasks, defaulting to `sites/lib/seasonalTasks.js`. Month values are strings. |
+| `banner-widget` | widget | A photo with overlaid text and buttons, plus the photo's credit. |
+| `sample-content` | task | `node app sample-content:populate --site=<hostname> [--profile=linden\|port-sorrel] [--name="..."]`. Refuses to run on a site that already has events or members. |
+
+- The association widgets have their own group in the expanded widget menu (`associationWidgets` in
+  `sites/lib/area.js`) and are in `fullConfig`, so layout columns, events and resources offer them.
+- Shared view code for the new index pages is in `sites/views/pager.jsx` and
+  `sites/views/featured-image.jsx`. Both are imported, not rendered with `<Template>`.
+- Association details (`tagline`, `contactEmail`, `swarmHotline`, `mailingAddress`, `socialLinks`, …)
+  are global settings, read by the footer.
+- Give select fields explicit values such as `all`, never `''`: the editor shows an empty-string
+  choice as blank.
+- The honey palette is set twice, in `@apostrophecms/styles/lib/color.js` and
+  `asset/ui/src/_variables.scss`. Keep them in step.
+- Tokens derived from other tokens (`--button-primary-color: var(--accent-color)`, `--link-color`,
+  the `--nav-*` colors, …) are declared on `:root, .dark`, so they follow the palette an editor picks
+  under Global Styles. A custom property that refers to another resolves where it is declared, so on
+  `:root` alone they kept light-mode values in dark mode.
+- Sass does not interpolate variables inside custom properties: write `--x: #{$var}`, not `--x: $var`.
+
+### Sample content
+
+Each association is a profile in `sites/modules/sample-content/lib/profiles/`, registered in the
+`profiles` map in `index.js`. A profile exports `defaultName`, `images` (the photo keys it uses),
+`styles` (Global Styles field values, or `null` for the defaults), `logo` (line breaks and colors for
+the generated wordmark) and one function per content type: `global`, `authors`, `categories`,
+`members`, `events`, `resources`, `articles`, `pages`, `home`. `linden.js` documents what they receive.
+
+- Only the listed `images` are uploaded and credited; using an unlisted key throws.
+- `pages` is built before any page exists, so links between those pages are URLs. `home` is built
+  last and may use page docs from `ctx.pages`.
+- Writers are usually members too. Author slugs are `by-<name>` so members keep `<name>` for their
+  profile URL (slugs are unique across pieces).
+
+`sites/modules/sample-content/images/` holds freely licensed photos from Wikimedia Commons.
+`images/credits.json` records each one's author, license and source page. The task copies these into
+the image pieces' `credit` and `creditUrl` fields and builds a "Photo credits" page from them. Most of
+the licenses require that attribution, so keep it with any image you add.
+
+People, phone numbers (555-01xx) and email addresses (`example.org`) in the sample content are
+fictional. Event dates are relative to the day the task runs.

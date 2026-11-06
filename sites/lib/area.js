@@ -78,6 +78,17 @@ const defaultRtConfig = {
   ]
 };
 
+// Widgets specific to a beekeeping association. Kept apart so they can be
+// offered as their own group in the expanded widget menu.
+const associationWidgets = {
+  banner: {},
+  'upcoming-events': {},
+  members: {},
+  'association-stats': {},
+  'swarm-hotline': {},
+  'seasonal-calendar': {}
+};
+
 const basicConfig = {
   '@apostrophecms/image': {},
   '@apostrophecms/video': {},
@@ -92,7 +103,7 @@ const fullConfig = Object.assign({
   article: {},
   card: {},
   'price-card': {}
-}, basicConfig);
+}, associationWidgets, basicConfig);
 
 const fullConfigExpandedGroups = {
   layout: {
@@ -101,6 +112,11 @@ const fullConfigExpandedGroups = {
       '@apostrophecms/layout': {}
     },
     columns: 1
+  },
+  association: {
+    label: 'project:association',
+    widgets: associationWidgets,
+    columns: 3
   },
   media: {
     label: 'project:media',
@@ -125,6 +141,7 @@ const fullConfigExpandedGroups = {
 };
 
 export {
+  defaultRtConfig,
   basicConfig,
   fullConfig,
   fullConfigExpandedGroups

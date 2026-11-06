@@ -228,45 +228,89 @@ function MobileNav({ data, apos, __t }) {
   );
 }
 
+// Beekeeping platform: diverges from public-demo deliberately. Each site is one
+// association, so the footer shows that association's details from global
+// settings (modules/@apostrophecms/global) instead of ApostropheCMS links.
+// Columns with nothing to show are left out.
 function Footer({ data, __t }) {
+  const global = data.global || {};
+  const pages = ((data.home && data.home._children) || [])
+    .filter((page) => page.visibility === 'public');
+  const socialLinks = global.socialLinks || [];
+  const addressLines = (global.mailingAddress || '').split('\n').filter(Boolean);
+  const telHref = (phone) => `tel:${phone.replace(/[^\d+]/g, '')}`;
+  const hasContact = global.contactEmail || global.contactPhone || global.swarmHotline;
   return (
     <footer className="footer">
       <div className="footer__section footer__top">
-        <div className="footer__column footer__column--logo">
-          <a href={(data.home && data.home._url) || '/'} className="footer__logo">
-            <Logo />
-          </a>
+        <div className="footer__column footer__column--about">
+          <h4>{siteTitle(data)}</h4>
+          {global.tagline && <p className="footer__tagline">{global.tagline}</p>}
+          {addressLines.length > 0 && (
+            <address>
+              {addressLines.map((line, i) => <>{i > 0 && <br />}{line}</>)}
+            </address>
+          )}
         </div>
-        <div className="footer__column">
-          <h4>{__t('project:footerExplore')}</h4>
-          <ul>
-            <li><a href="http://apostrophecms.com/?utm_source=demo" target="_blank" rel="noopener noreferrer">ApostropheCMS.com</a></li>
-            <li><a href="https://docs.apostrophecms.org/?utm_source=demo" target="_blank" rel="noopener noreferrer">ApostropheCMS Docs</a></li>
-            <li><a href="https://docs.apostrophecms.org/guide/development-setup.html?utm_source=demo" target="_blank" rel="noopener noreferrer">Getting Started</a></li>
-            <li><a href="https://apostrophecms.com/assembly?utm_source=demo" target="_blank" rel="noopener noreferrer">ApostropheCMS Multisite</a></li>
-            <li><a href="https://meetings.hubspot.com/tom-boutell/demo-meeting?utm_source=demo" target="_blank" rel="noopener noreferrer">Book a Call</a></li>
-          </ul>
-        </div>
-        <div className="footer__column">
-          <h4>{__t('project:footerProduct')}</h4>
-          <ul>
-            <li><a href="https://apostrophecms.com/extensions?license=pro&utm_source=demo" target="_blank" rel="noopener noreferrer">Pro Feature</a></li>
-            <li><a href="https://apostrophecms.com/hosting?utm_source=demo" target="_blank" rel="noopener noreferrer">Hosting</a></li>
-            <li><a href="https://apostrophecms.com/blog?category=product-updates&utm_source=demo" target="_blank" rel="noopener noreferrer">Changelog</a></li>
-            <li><a href="https://apostrophecms.com/accessibility?utm_source=demo" target="_blank" rel="noopener noreferrer">Accessibility</a></li>
-            <li><a href="https://apostrophecms.com/security?utm_source=demo" target="_blank" rel="noopener noreferrer">Security</a></li>
-          </ul>
-        </div>
-        <div className="footer__column">
-          <h4>{__t('project:footerSocialMedia')}</h4>
-          <ul>
-            <li><a href="https://bsky.app/profile/apostrophecms.com" target="_blank" rel="noopener noreferrer">Bluesky</a></li>
-            <li><a href="https://x.com/apostrophecms" target="_blank" rel="noopener noreferrer">X / Twitter</a></li>
-            <li><a href="https://discord.com/invite/HwntQpADJr" target="_blank" rel="noopener noreferrer">Join the Discord</a></li>
-            <li><a href="https://youtube.com/c/apostrophecms" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-            <li><a href="https://www.linkedin.com/company/apostrophecms/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          </ul>
-        </div>
+        {pages.length > 0 && (
+          <div className="footer__column">
+            <h4>{__t('project:footerExploreSite')}</h4>
+            <ul>
+              {pages.map((page) => (
+                <li><a href={page._url}>{page.title}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {hasContact && (
+          <div className="footer__column">
+            <h4>{__t('project:footerContact')}</h4>
+            <ul>
+              {global.contactEmail && (
+                <li><a href={`mailto:${global.contactEmail}`}>{global.contactEmail}</a></li>
+              )}
+              {global.contactPhone && (
+                <li><a href={telHref(global.contactPhone)}>{global.contactPhone}</a></li>
+              )}
+              {global.swarmHotline && (
+                <li>
+                  <a href={telHref(global.swarmHotline)}>
+                    {__t('project:footerSwarmHotline', { phone: global.swarmHotline })}
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
+        {socialLinks.length > 0 && (
+          <div className="footer__column">
+            <h4>{__t('project:footerFollow')}</h4>
+            <ul>
+              {socialLinks.map((link) => (
+                <li>
+                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                    {link.platform === 'Newsletter' ? __t('project:newsletter') : link.platform}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <div className="footer__section footer__bottom">
+        <p>
+          © {new Date().getFullYear()} {siteTitle(data)}
+          {global.legalNote && <> · {global.legalNote}</>}
+        </p>
+        <a
+          href="https://apostrophecms.com/?utm_source=demo"
+          className="footer__logo"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>{__t('project:footerBuiltWith')}</span>
+          <Logo />
+        </a>
       </div>
     </footer>
   );
